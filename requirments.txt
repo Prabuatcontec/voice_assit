@@ -1,0 +1,9 @@
+gTTS
+PyAutoGUI
+pyjokes
+pywhatkit
+SpeechRecognition
+GoogleNews
+googletrans
+pyttsx3
+playsound
