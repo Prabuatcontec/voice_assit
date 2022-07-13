@@ -7,3 +7,5 @@ GoogleNews
 googletrans
 pyttsx3
 playsound
+PyAudio
+translate

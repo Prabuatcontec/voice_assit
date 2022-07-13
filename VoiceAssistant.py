@@ -125,7 +125,7 @@ def wishMe():
     else:
         talk("Hello,Good Evening")
         print("Hello,Good Evening")
-    assname = ("R 1 point 0")
+    assname = ("Bimmi")
     talk("Loading your personal assistant")
     talk(assname)
     talk("Please confirm your Language by mentioning the following. English, Spanish, French, Tamil, and Hindi")
