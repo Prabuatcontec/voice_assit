@@ -3,6 +3,7 @@ import re
 import sys  # to get exit
 import tkinter as tk
 import webbrowser
+#import winsound
 from logging import exception
 from tkinter import *
 import tkinter.messagebox as message
@@ -33,6 +34,7 @@ import multiprocessing
 from datetime import datetime
 from threading import *
 import datetime
+from google_trans_new import google_translator
 
 global query
 
@@ -82,6 +84,8 @@ listener = sr.Recognizer()  # initialization
 engine = pyttsx3.init()  # used to talk
 voices = engine.getProperty('voices')
 
+translator_new = google_translator()  
+
 
 def there_exists(terms):
     for term in terms:
@@ -116,19 +120,15 @@ def talk(command):
 
 def wishMe():
     hour = datetime.datetime.now().hour
+    assname = ("R 1 point 0 Loading your personal assistant Please confirm your Language by mentioning the following. English, Spanish, French, Tamil, and Hindi")
+    
     if hour >= 0 and hour < 12:
-        talk("Hello,Good Morning")
-        print("Hello,Good Morning")
+        talk("Hello,Good Morning" + assname)
     elif hour >= 12 and hour < 18:
-        talk("Hello,Good Afternoon")
-        print("Hello,Good Afternoon")
+        talk("Hello,Good Afternoon" + assname)
     else:
-        talk("Hello,Good Evening")
-        print("Hello,Good Evening")
-    assname = ("Bimmi")
-    talk("Loading your personal assistant")
-    talk(assname)
-    talk("Please confirm your Language by mentioning the following. English, Spanish, French, Tamil, and Hindi")
+        talk("Hello,Good Evening" + assname)
+     
     # talk("Tell me how can I help you?")
 
 
@@ -138,20 +138,19 @@ def choose_language():
     try:
         # use the microphone as source for input.
         with sr.Microphone() as source:
-            print("Clearing background noises...Please wait")
             # wait for a second to let the recognizer
             # adjust the energy threshold based on
             # the surrounding noise level
-            listener.adjust_for_ambient_noise(source, duration=0.5)
+            listener.adjust_for_ambient_noise(source, duration=1)
             print('Listening')
             voice = listener.listen(source)
-            print('Done recording')
+            print('Done recording..')
             langCommand = listener.recognize_google(voice)  # Using google to recognize audio
             langCommand = langCommand.lower()
-            print(langCommand)
             print(listener.recognize_google(voice))
             return langCommand
-    except:
+    except BaseException as err:
+        print(f"Unexpected {err=}, {type(err)=}")
         # talk("Pardon me, please say that again")
         audio_string = "Pardon me, please continue from again"
         print(audio_string)
@@ -192,7 +191,8 @@ def talk_command():
                 # command = listener.recognize_google(voice, language="en-US")  # Using google to recognize audio
             command = command.lower()
             return command
-    except:
+    except BaseException as err:
+        print(f"Unexpected {err=}, {type(err)=}")
         # talk("Pardon me, please say that again")
         audio_string = "Pardon me, please say that again"
         print(audio_string)
@@ -257,7 +257,7 @@ def multi_talk_command_tamil(choosenLangCode):
             # the surrounding noise level
             listener.adjust_for_ambient_noise(source, duration=0.5)
             # talk('Ask me anything')
-            print('Listening')
+            talk('Listening')
             voice = listener.listen(source)
             print('Done recording')
             print(voice)
@@ -288,7 +288,7 @@ def multi_talk_command_tamil(choosenLangCode):
         # return "None"
 
 
-def listen_command(choosenLangCode):
+def listen_command(choosenLangCode="English"):
     global command
     try:
         with sr.Microphone() as source:
@@ -296,7 +296,7 @@ def listen_command(choosenLangCode):
             # wait for a second to let the recognizer
             # adjust the energy threshold based on
             # the surrounding noise level
-            listener.adjust_for_ambient_noise(source, duration=0.2)
+            listener.adjust_for_ambient_noise(source, duration=0.5)
             # talk('Tell me how I can assist you.?..')
             audio_string = "Tell me how I can assist you.?"
             print(audio_string)
@@ -327,7 +327,8 @@ def listen_command(choosenLangCode):
                 time.sleep(30)
                 sys.exit()
         return command
-    except:
+    except BaseException as err:
+        print(f"Unexpected {err=}, {type(err)=}")
         # talk("Pardon me, please say that again")
         audio_string = "Pardon me, please say that again"
         print(audio_string)
@@ -592,14 +593,14 @@ def run_alexa(choosenLangCode):
                                 print(responeData.json())
                                 print(responeData)
                                 if '<Response [200]>' in responeData:
-                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using Bimmi'
+                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using R1.0'
                                     print(audio_string12)
                                     destini_lang12 = convert_language(audio_string12, choosenLangCode)
                                     talk(destini_lang12)
                                     print(destini_lang12)
                                     stopspeacking()
                                 else:
-                                    audio_string13 = 'Thanks for using Bimmi'
+                                    audio_string13 = 'Thanks for using R1.0'
                                     print(audio_string13)
                                     destini_lang13 = convert_language(audio_string13, choosenLangCode)
                                     talk(destini_lang13)
@@ -644,14 +645,14 @@ def run_alexa(choosenLangCode):
                                     print(responeData.json())
                                     print(responeData)
                                     if '<Response [200]>' in responeData:
-                                        audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using Bimmi'
+                                        audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using R1.0'
                                         print(audio_string12)
                                         destini_lang12 = convert_language(audio_string12, choosenLangCode)
                                         talk(destini_lang12)
                                         print(destini_lang12)
                                         stopspeacking()
                                     else:
-                                        audio_string13 = 'Thanks for using Bimmi'
+                                        audio_string13 = 'Thanks for using R1.0'
                                         print(audio_string13)
                                         destini_lang13 = convert_language(audio_string13, choosenLangCode)
                                         talk(destini_lang13)
@@ -792,14 +793,14 @@ def run_alexa(choosenLangCode):
                                 print(responeData.json())
                                 print(responeData)
                                 if '<Response [200]>' in responeData:
-                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using Bimmi'
+                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using R1.0'
                                     print(audio_string12)
                                     destini_lang12 = convert_language(audio_string12, choosenLangCode)
                                     # talk(destini_lang12)
                                     print(destini_lang12)
                                     stopspeacking()
                                 else:
-                                    audio_string13 = 'Thanks for using Bimmi'
+                                    audio_string13 = 'Thanks for using R1.0'
                                     print(audio_string13)
                                     destini_lang13 = convert_language(audio_string13, choosenLangCode)
                                     talk(destini_lang13)
@@ -918,14 +919,14 @@ def run_alexa(choosenLangCode):
                                 print(responeData.json())
                                 print(responeData)
                                 if '<Response [200]>' in responeData:
-                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using Bimmi'
+                                    audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using R1.0'
                                     print(audio_string12)
                                     destini_lang12 = convert_language(audio_string12, choosenLangCode)
                                     talk(destini_lang12)
                                     print(destini_lang12)
                                     stopspeacking()
                                 else:
-                                    audio_string13 = 'Thanks for using Bimmi'
+                                    audio_string13 = 'Thanks for using R1.0'
                                     print(audio_string13)
                                     destini_lang13 = convert_language(audio_string13, choosenLangCode)
                                     talk(destini_lang13)
@@ -970,14 +971,14 @@ def run_alexa(choosenLangCode):
                                     print(responeData.json())
                                     print(responeData)
                                     if '<Response [200]>' in responeData:
-                                        audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using Bimmi'
+                                        audio_string12 = 'Successfully created your ticket in Bench request. Thanks for using R1.0'
                                         print(audio_string12)
                                         destini_lang12 = convert_language(audio_string12, choosenLangCode)
                                         talk(destini_lang12)
                                         print(destini_lang12)
                                         stopspeacking()
                                     else:
-                                        audio_string13 = 'Thanks for using Bimmi'
+                                        audio_string13 = 'Thanks for using R1.0'
                                         print(audio_string13)
                                         destini_lang13 = convert_language(audio_string13, choosenLangCode)
                                         talk(destini_lang13)
@@ -1132,7 +1133,7 @@ def run_alexa(choosenLangCode):
     elif there_exists(['alarm']):
         alarm(obj)
 
-    # elif there_exists(['hi', 'wake', 'hello', 'rithik', 'Bimmi', 'R1', 'Hey', 'aur 1.0', 'uma']):
+    # elif there_exists(['hi', 'wake', 'hello', 'rithik', 'R1.0', 'R1', 'Hey', 'aur 1.0', 'uma']):
     # speak('yes am here..Tell me how can i help you')
 
     elif there_exists(['change voice', 'change your voice']):
@@ -1164,7 +1165,7 @@ def run_alexa(choosenLangCode):
     #     winsound.Beep(500, 500)
     #     winsound.Beep(550, 500)
 
-        #time.sleep(6)
+        time.sleep(2)
 
     elif there_exists(["log off", "sign out", "log out", "stop", "shut down", "exit", "bye"]):
         talk('Please give the review. It will help me to improve my performance.')
@@ -1172,7 +1173,7 @@ def run_alexa(choosenLangCode):
 
     elif 'screenshot' in command:
         speak('Please go on the screen whose screenshot you want to take, after 5 seconds I will take screenshot')
-        time.sleep(4)
+        time.sleep(2)
         speak('Taking screenshot....3........2.........1.......')
         pyautogui.screenshot('screenshot_by_r1.png')
         speak('The screenshot is saved as screenshot_by_r1.png')
@@ -1502,7 +1503,7 @@ def run_alexa(choosenLangCode):
             print(tra_string12)
             print(responseData)
             writeIntoFile(responseData, "rating")
-            tra_string112 = 'Thanks for using Bimmi'
+            tra_string112 = 'Thanks for using R1.0'
             print(tra_string112)
             talk(tra_string112)
             print("-----*-----*-----*-----*-----*-----*")
@@ -1532,7 +1533,7 @@ def run_alexa(choosenLangCode):
             print(tra_err)
             talk(tra_err)
         else:
-            tra_string13 = 'Thanks for using Bimmi'
+            tra_string13 = 'Thanks for using R1.0'
             print(tra_string13)
             talk(tra_string13)
         # stopspeacking()
@@ -1682,7 +1683,7 @@ def run_alexa(choosenLangCode):
             print(tra_string12)
             print(responseData)
             writeIntoFile(responseData, 'shipment')
-            tra_string112 = 'Thanks for using Bimmi'
+            tra_string112 = 'Thanks for using R1.0'
             print(tra_string112)
             talk(tra_string112)
             print("-----*-----*-----*-----*-----*-----*")
@@ -1712,7 +1713,7 @@ def run_alexa(choosenLangCode):
             print(tra_err)
             talk(tra_err)
         else:
-            tra_string13 = 'Thanks for using Bimmi'
+            tra_string13 = 'Thanks for using R1.0'
             print(tra_string13)
             talk(tra_string13)
             # stopspeacking()
@@ -1799,7 +1800,7 @@ def run_alexa(choosenLangCode):
                 print(tracking_msg)
                 talk(tracking_msg)
                 writeIntoFile(responseData, 'tracking')
-                tra_string112 = 'Thanks for using Bimmi'
+                tra_string112 = 'Thanks for using R1.0'
                 print(tra_string112)
                 talk(tra_string112)
                 print("-----*-----*-----*-----*-----*-----*")
@@ -1829,7 +1830,7 @@ def run_alexa(choosenLangCode):
                 print(tra_err)
                 talk(tra_err)
             else:
-                tra_string13 = 'Thanks for using Bimmi'
+                tra_string13 = 'Thanks for using R1.0'
                 print(tra_string13)
                 talk(tra_string13)
             # stopspeacking()
@@ -1921,40 +1922,45 @@ def select1():
 
 
 def convert_language(audio_string, language_code):
+    
     # invoking Translator
-    if 'spanish' in language_code or 'french' in language_code:
-        if 'spanish' in language_code:
-            translate_text = translator.translate(audio_string, dest='es')
-        elif 'french' in language_code:
-            translate_text = translator.translate(audio_string, dest='fr')
-        return translate_text.text
-    elif 'tamil' in language_code or 'hindi' in language_code:
-        print('am i here in tamil/hindi block?')
-        if 'tamil' in language_code:
-            print('am i here in tamil block?')
-            translate_text = translator.translate(audio_string, dest='ta')
-            print(translate_text)
-            tts = gt.gTTS(text=translate_text.text, lang="ta", slow=False)
-            basename = "tamilaudio"
-            suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-            filename = "_".join([basename, suffix])  # e.g. 'mylogfile_120508_171442'
-            tts.save(filename + ".mp3")
-            print(filename)
-            os.system(filename + ".mp3")
-            time.sleep(8)
-        elif 'hindi' in language_code:
-            translate_text = translator.translate(audio_string, dest='hi')
-            tts = gt.gTTS(text=translate_text.text, lang="hi", slow=False)
-            basename = "hindiaudio"
-            suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
-            filename = "_".join([basename, suffix])  # e.g. 'mylogfile_120508_171442'
-            tts.save(filename + ".mp3")
-            os.system(filename + ".mp3")
-            time.sleep(8)
-        return translate_text.text
-    else:
-        translate_text = translator.translate(audio_string, dest='en')
-        return translate_text.text
+    try:
+        if 'spanish' in language_code or 'french' in language_code:
+            if 'spanish' in language_code:
+                translate_text = translator.translate(audio_string, dest='es')
+            elif 'french' in language_code:
+                translate_text = translator.translate(audio_string, dest='fr')
+            return translate_text.text
+        elif 'tamil' in language_code or 'hindi' in language_code:
+            print('am i here in tamil/hindi block?')
+            if 'tamil' in language_code:
+                print('am i here in tamil block?')
+                translate_text = translator.translate(audio_string, dest='ta')
+                print(translate_text)
+                tts = gt.gTTS(text=translate_text.text, lang="ta", slow=False)
+                basename = "tamilaudio"
+                suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
+                filename = "_".join([basename, suffix])  # e.g. 'mylogfile_120508_171442'
+                tts.save(filename + ".mp3")
+                print(filename)
+                os.system(filename + ".mp3")
+                time.sleep(8)
+            elif 'hindi' in language_code:
+                translate_text = translator.translate(audio_string, dest='hi')
+                tts = gt.gTTS(text=translate_text.text, lang="hi", slow=False)
+                basename = "hindiaudio"
+                suffix = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
+                filename = "_".join([basename, suffix])  # e.g. 'mylogfile_120508_171442'
+                tts.save(filename + ".mp3")
+                os.system(filename + ".mp3")
+                time.sleep(8)
+            return translate_text.text
+        else:
+            
+            translate_text = translator.translate(audio_string, dest='en')
+            return translate_text.text
+    except BaseException as err:
+        print(f"Unexpected {err=}, {type(err)=}")
 
 
 def startspeakeithme():
@@ -2052,7 +2058,7 @@ def stopspeacking():
 def alarm(self, root):
     self.window = root
     self.window.geometry("680x420+0+0")
-    self.window.title("Bimmi Clock")
+    self.window.title("R1.0 Clock")
 
     # Background image of the first window.
     self.bg_image = ImageTk.PhotoImage(file="Images/image_1.jpg")

@@ -10,9 +10,11 @@ pyinstaller --onefile --icon="logo1.ico" --hidden-import pandas._libs.tslibs.bas
 4.python audio - pip install PyAudio - if we get error any time , we need to install pipwin by using below cmd,
 
 pip install SpeechRecognition
-pip install pyttsx3
-pip install pipwin
+pip3 install pyttsx3
+pip3 install pipwin
 then pipwin install Pyaudio
+
+STATIC_DEPS=true pip install lxml
 
 pip install pywhatkit - for utube
 pip install wikipedia

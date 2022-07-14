@@ -4,8 +4,9 @@ pyjokes
 pywhatkit
 SpeechRecognition
 GoogleNews
-googletrans
+googletrans==3.1.0a0
 pyttsx3
 playsound
-PyAudio
+PyAudio==0.2.11
 translate
+google_trans_new
