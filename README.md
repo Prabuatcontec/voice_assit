@@ -23,6 +23,7 @@ pip install python-utils
 
 brew install portaudio
 brew link portaudio	
+brew install flac
 
 pip3 install --global-option='build_ext' --global-option="-I$(brew --prefix)/include" --global-option="-L$(brew --prefix)/lib" pyaudio
 
